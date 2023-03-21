@@ -1,10 +1,24 @@
-#!/usr/bin/python
-import sys
+# Import required libraries
 import Adafruit_DHT
+import time
 
+# Set sensor type and pin number
+sensor = Adafruit_DHT.DHT11
+pin = 4
+
+# Loop to read data from sensor
 while True:
+    # Try to grab a sensor reading
+    humidity, temperature = Adafruit_DHT.read_retry(sensor, pin)
 
-    humidity, temperature = Adafruit_DHT.read_retry(11, 4)
+    # Skip to the next loop iteration if no reading was taken
+    if humidity is None or temperature is None:
+        continue
 
-    print 'Temp: {0:0.1f} C  Humidity: {1:0.1f} %'.format(temperature, humidity)
+    # Print the temperature and humidity
+    print('Temperature: {0:0.1f} C'.format(temperature))
+    print('Humidity: {0:0.1f} %'.format(humidity))
+
+    # Wait a few seconds before repeating the loop
+    time.sleep(2)
     
